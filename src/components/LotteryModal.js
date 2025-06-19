@@ -72,9 +72,12 @@ const LotteryModal = ({
   onRowChange,
   onAddRow,
   onRemoveRow,
-  onSpin
+  onSpin,
+  onComplete
 }) => {
   if (!isOpen) return null;
+
+  const hasWinner = rewards.some(r => r.winner);
 
   return (
     <div className="lottery-modal-overlay">
@@ -91,13 +94,23 @@ const LotteryModal = ({
             />
           </div>
         ))}
-        <button
-          className="tmup-add-btn"
-          onClick={onAddRow}
-          disabled={rewards.some(row => !row.prizeName)}
-        >
-          +Add Reward
-        </button>
+        <div className="modal-actions">
+          <button
+            className="tmup-add-btn"
+            onClick={onAddRow}
+            disabled={rewards.some(row => !row.prizeName)}
+          >
+            +Add Reward
+          </button>
+          {hasWinner && (
+            <button
+              className="tmup-complete-btn"
+              onClick={onComplete}
+            >
+              Complete
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );

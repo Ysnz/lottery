@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import LotteryModal from './components/LotteryModal';
 import WheelComponent from './components/WheelComponent';
+import InfoPopup from './components/InfoPopup';
 import './App.css';
 
 const segColors = [
@@ -38,6 +39,7 @@ function App() {
   const [wheelCodes, setWheelCodes] = useState([]);
   const [winningCode, setWinningCode] = useState(null);
   const [spinDuration, setSpinDuration] = useState(8000);
+  const [popupMessage, setPopupMessage] = useState('');
 
   const handleRowChange = (index, newValue) => {
     const newRewards = [...rewards];
@@ -67,6 +69,16 @@ function App() {
     setSpinDuration(Math.random() * 7000 + 8000);
     setShowWheel(true);
     setSpinTrigger(x => x + 1);
+  };
+
+  const handleComplete = () => {
+    setShowModal(false);
+    setPopupMessage('Your operation has been successfully saved.');
+  };
+
+  const handlePopupClose = () => {
+    setPopupMessage('');
+    // Optionally reset other states here if needed when closing the final popup
   };
 
   const handleWheelFinish = (winnerCode) => {
@@ -108,7 +120,10 @@ function App() {
         onAddRow={handleAddRow}
         onRemoveRow={handleRemoveRow}
         onSpin={handleSpin}
+        onComplete={handleComplete}
       />
+
+      <InfoPopup message={popupMessage} onClose={handlePopupClose} />
 
       {showWheel && spinningRowIndex !== null && (
         <div className={`wheel-overlay ${rewards[spinningRowIndex]?.winner ? 'has-winner' : ''}`}>
