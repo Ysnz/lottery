@@ -66,7 +66,7 @@ function App() {
     setWheelCodes(codes);
     setWinningCode(winner);
     setSpinningRowIndex(index);
-    setSpinDuration(Math.random() * 7000 + 8000);
+    setSpinDuration(Math.random() * 8000 + 14000);
     setShowWheel(true);
     setSpinTrigger(x => x + 1);
   };
@@ -139,8 +139,8 @@ function App() {
               buttonText=""
               isOnlyOnce={true}
               size={290}
-              upDuration={1000}
-              downDuration={spinDuration - 1000}
+              upDuration={1500}
+              downDuration={spinDuration - 1500}
             />
             {rewards[spinningRowIndex]?.winner && (
               <div className="wheel-winner-overlay">

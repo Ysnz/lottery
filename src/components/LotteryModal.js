@@ -9,7 +9,7 @@ const prizeOptions = [
   { label: '€50', value: 50 },
 ];
 
-const RewardRow = ({ value, onChange, onSpin, onRemove, canRemove }) => {
+const RewardRow = ({ value, onChange, onSpin, onRemove }) => {
   const isWinningRow = !!value.winner;
 
   if (isWinningRow) {
@@ -19,6 +19,14 @@ const RewardRow = ({ value, onChange, onSpin, onRemove, canRemove }) => {
           <span className="winner-badge-inline">🎉 Winner!</span>
           <span className="winner-code-inline">{value.winner}</span>
         </div>
+        <button
+          className="tmup-remove-btn"
+          onClick={onRemove}
+          title="Remove"
+          type="button"
+        >
+          ×
+        </button>
       </div>
     );
   }
@@ -51,16 +59,14 @@ const RewardRow = ({ value, onChange, onSpin, onRemove, canRemove }) => {
       >
         SPIN
       </button>
-      {canRemove && (
-        <button
-          className="tmup-remove-btn"
-          onClick={onRemove}
-          title="Remove"
-          type="button"
-        >
-          ×
-        </button>
-      )}
+      <button
+        className="tmup-remove-btn"
+        onClick={onRemove}
+        title="Remove"
+        type="button"
+      >
+        ×
+      </button>
     </div>
   );
 };
@@ -90,7 +96,6 @@ const LotteryModal = ({
               onChange={val => onRowChange(idx, val)}
               onSpin={() => onSpin(idx)}
               onRemove={() => onRemoveRow(idx)}
-              canRemove={rewards.length > 1 && !row.winner}
             />
           </div>
         ))}

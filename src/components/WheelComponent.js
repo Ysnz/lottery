@@ -55,7 +55,7 @@ const WheelComponent = ({
         const randomOffset = (Math.random() - 0.5) * segmentAngle * 0.8;
         const targetAngle = (winningSegmentIndex + 0.5) * segmentAngle + randomOffset;
         
-        const totalRotations = Math.floor(downDuration / 1000) * (2 * Math.PI);
+        const totalRotations = Math.floor(downDuration / 1000) * 1.2 * (2 * Math.PI);
         const finalAngle = totalRotations + (2 * Math.PI - targetAngle) + (3 * Math.PI / 2);
 
         let startTime = null;
@@ -65,7 +65,7 @@ const WheelComponent = ({
             const progress = timestamp - startTime;
             const totalDuration = upDuration + downDuration;
             
-            const newAngle = easeInOutCubic(Math.min(progress, totalDuration), 0, finalAngle, totalDuration);
+            const newAngle = improvedEasing(Math.min(progress, totalDuration), 0, finalAngle, totalDuration);
             
             angleCurrent.current = newAngle;
 
@@ -80,6 +80,19 @@ const WheelComponent = ({
         };
 
         spinHandle.current = requestAnimationFrame(animate);
+    };
+
+    const improvedEasing = (t, b, c, d) => {
+        const normalizedTime = t / d;
+        
+        if (normalizedTime < 0.4) {
+            const segmentTime = normalizedTime / 0.4;
+            return b + c * (segmentTime * 0.5);
+        } else {
+            const segmentTime = (normalizedTime - 0.4) / 0.6;
+            const easeOut = 1 - Math.pow(1 - segmentTime, 4);
+            return b + c * (0.5 + easeOut * 0.5);
+        }
     };
 
     const easeInOutCubic = (t, b, c, d) => {

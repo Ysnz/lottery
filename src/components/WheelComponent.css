@@ -8,6 +8,16 @@
   background: transparent;
   backdrop-filter: none;
   box-shadow: none;
+  animation: subtlePulse 3s ease-in-out infinite;
+}
+
+@keyframes subtlePulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.02);
+  }
 }
 
 #wheel canvas {
