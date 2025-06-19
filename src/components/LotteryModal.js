@@ -9,7 +9,7 @@ const prizeOptions = [
   { label: '€50', value: 50 },
 ];
 
-const RewardRow = ({ value, onChange, onSpin }) => (
+const RewardRow = ({ value, onChange, onSpin, onRemove, canRemove }) => (
   <div className="tmup-row">
     <div className="tmup-prize-options">
       {prizeOptions.map((option) => (
@@ -37,6 +37,16 @@ const RewardRow = ({ value, onChange, onSpin }) => (
     >
       SPIN
     </button>
+    {canRemove && (
+      <button
+        className="tmup-remove-btn"
+        onClick={onRemove}
+        title="Remove"
+        type="button"
+      >
+        ×
+      </button>
+    )}
   </div>
 );
 
@@ -59,11 +69,14 @@ const LotteryModal = ({
     setRewardRows(rows => [...rows, { selectedPrize: 0, prizeName: '' }]);
   };
 
+  const handleRemoveRow = idx => {
+    setRewardRows(rows => rows.filter((_, i) => i !== idx));
+  };
+
   const handleSpin = idx => {
     const row = rewardRows[idx];
     if (!row.prizeName) return;
     onSpin([{ name: row.prizeName, value: row.selectedPrize }]);
-    // İsterseniz: satırı sıfırlayabilirsiniz
     setRewardRows(rows => rows.map((r, i) => i === idx ? { selectedPrize: 0, prizeName: '' } : r));
   };
 
@@ -77,6 +90,8 @@ const LotteryModal = ({
             value={row}
             onChange={val => handleRowChange(idx, val)}
             onSpin={() => handleSpin(idx)}
+            onRemove={() => handleRemoveRow(idx)}
+            canRemove={rewardRows.length > 1}
           />
         ))}
         <button
