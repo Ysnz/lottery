@@ -47,13 +47,13 @@
   letter-spacing: 0.01em;
 }
 
-.price-options {
+.prize-options {
   display: flex;
   gap: 14px;
   margin-bottom: 10px;
 }
 
-.price-btn {
+.prize-btn {
   border: 1.5px solid #13a3b3;
   background: #fff;
   color: #13a3b3;
@@ -67,13 +67,13 @@
   box-shadow: none;
 }
 
-.price-btn.selected, .price-btn:active {
+.prize-btn.selected, .prize-btn:active {
   background: #13a3b3;
   color: #fff;
   border: 1.5px solid #13a3b3;
 }
 
-.price-btn:hover {
+.prize-btn:hover {
   background: #e6f7fa;
   color: #0e7c8b;
   border: 1.5px solid #0e7c8b;
@@ -136,7 +136,7 @@
     min-width: 90vw;
     padding: 24px 8vw 24px 8vw;
   }
-  .price-options {
+  .prize-options {
     flex-wrap: wrap;
     gap: 10px;
   }

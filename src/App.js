@@ -4,8 +4,8 @@ import './App.css';
 
 function App() {
   const [showModal, setShowModal] = useState(false);
-  const [selectedPrice, setSelectedPrice] = useState(0);
-  const [priceName, setPriceName] = useState('');
+  const [selectedPrize, setSelectedPrize] = useState(0);
+  const [prizeName, setPrizeName] = useState('');
 
   const handleSpin = () => {
     setShowModal(false);
@@ -20,10 +20,10 @@ function App() {
       <LotteryModal
         isOpen={showModal}
         onClose={() => setShowModal(false)}
-        selectedPrice={selectedPrice}
-        setSelectedPrice={setSelectedPrice}
-        priceName={priceName}
-        setPriceName={setPriceName}
+        selectedPrize={selectedPrize}
+        setSelectedPrize={setSelectedPrize}
+        prizeName={prizeName}
+        setPrizeName={setPrizeName}
         onSpin={handleSpin}
       />
     </div>
