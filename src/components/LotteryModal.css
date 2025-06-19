@@ -169,7 +169,7 @@
 }
 .tmup-prize-options {
   display: flex;
-  gap: 14px;
+  gap: 10px;
 }
 .tmup-prize-btn {
   background: #fff;
@@ -177,8 +177,9 @@
   color: #13a3b3;
   border-radius: 12px;
   font-weight: 600;
-  padding: 12px 28px;
+  padding: 8px 18px;
   font-size: 1.1rem;
+  min-width: 80px;
   transition: background 0.18s, color 0.18s;
   outline: none;
   box-shadow: none;
