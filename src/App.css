@@ -1,0 +1,249 @@
+.App {
+  text-align: center;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.App-header {
+  margin-bottom: 30px;
+}
+
+.App-header h1 {
+  font-size: 3rem;
+  margin-bottom: 10px;
+  background: linear-gradient(45deg, #FF6B6B, #4ECDC4, #45B7D1, #96CEB4);
+  background-size: 400% 400%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradientShift 3s ease-in-out infinite;
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.App-header p {
+  font-size: 1.2rem;
+  color: rgba(255, 255, 255, 0.9);
+  margin: 0;
+}
+
+.App-main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+}
+
+.wheel-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 8px 32px rgba(19,163,179,0.10), 0 1.5px 8px rgba(0,0,0,0.06);
+  padding: 36px 0 36px 0;
+  margin: 0 0 32px 0;
+}
+
+.result-section {
+  animation: slideIn 0.5s ease-out;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.result-card {
+  background: #fff;
+  padding: 38px 32px 32px 32px;
+  border-radius: 18px;
+  box-shadow: 0 8px 32px rgba(19,163,179,0.10), 0 1.5px 8px rgba(0,0,0,0.06);
+  border: 2px solid #13a3b3;
+  backdrop-filter: blur(0px);
+  max-width: 400px;
+  width: 100%;
+  font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+  text-align: center;
+}
+
+.result-card h2 {
+  color: #13a3b3;
+  margin-bottom: 18px;
+  font-size: 2rem;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+}
+
+.prize-amount {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #0e7c8b;
+  text-shadow: none;
+}
+
+.reset-button {
+  background: #13a3b3;
+  color: #fff;
+  border: none;
+  padding: 14px 36px;
+  border-radius: 8px;
+  font-size: 1.15rem;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 22px;
+  box-shadow: 0 2px 8px rgba(19,163,179,0.08);
+  transition: background 0.18s, box-shadow 0.18s;
+  font-family: inherit;
+}
+
+.reset-button:hover {
+  background: #0e7c8b;
+  box-shadow: 0 8px 24px rgba(19,163,179,0.13);
+}
+
+.reset-button:active {
+  transform: translateY(0);
+}
+
+.info-section {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 25px;
+  border-radius: 15px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  max-width: 500px;
+  width: 100%;
+}
+
+.info-section h3 {
+  color: white;
+  margin-bottom: 15px;
+  font-size: 1.5rem;
+}
+
+.info-section ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  text-align: left;
+}
+
+.info-section li {
+  color: rgba(255, 255, 255, 0.9);
+  padding: 8px 0;
+  font-size: 1.1rem;
+  position: relative;
+  padding-left: 25px;
+}
+
+.info-section li:before {
+  content: "🎯";
+  position: absolute;
+  left: 0;
+  top: 8px;
+}
+
+@media (max-width: 768px) {
+  .App {
+    padding: 10px;
+  }
+  
+  .App-header h1 {
+    font-size: 2rem;
+  }
+  
+  .App-header p {
+    font-size: 1rem;
+  }
+  
+  .result-card {
+    padding: 20px;
+    margin: 0 10px;
+  }
+  
+  .result-card h2 {
+    font-size: 1.5rem;
+  }
+  
+  .prize-amount {
+    font-size: 1.5rem;
+  }
+  
+  .info-section {
+    margin: 0 10px;
+  }
+}
+
+.start-lottery-btn {
+  background: #13a3b3;
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  padding: 22px 60px;
+  font-size: 1.7rem;
+  font-weight: 700;
+  font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+  cursor: pointer;
+  margin: 48px 0 0 0;
+  box-shadow: 0 6px 24px rgba(19,163,179,0.13);
+  transition: background 0.18s, transform 0.18s, box-shadow 0.18s;
+  letter-spacing: 0.01em;
+}
+
+.start-lottery-btn:hover {
+  background: #0e7c8b;
+  transform: translateY(-2px) scale(1.04);
+  box-shadow: 0 10px 32px rgba(19,163,179,0.18);
+}
+
+.app-center {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f8f8f6;
+}
+
+.lottery-btn {
+  background: #13a3b3;
+  color: #fff;
+  border: none;
+  border-radius: 7px;
+  padding: 18px 0;
+  width: 100%;
+  max-width: 400px;
+  font-size: 1.35rem;
+  font-weight: 700;
+  font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(19,163,179,0.08);
+  letter-spacing: 0.01em;
+  transition: background 0.18s, box-shadow 0.18s;
+}
+
+.lottery-btn:hover {
+  background: #0e7c8b;
+  box-shadow: 0 8px 24px rgba(19,163,179,0.13);
+}
+
+.lottery-text {
+  font-size: 1.15em;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+} 

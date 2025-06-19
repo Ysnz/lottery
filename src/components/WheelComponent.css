@@ -1,0 +1,33 @@
+.wheel-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  margin: 20px;
+  border-radius: 15px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+#wheel canvas {
+  border-radius: 50%;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease;
+}
+
+#wheel canvas:hover {
+  transform: scale(1.02);
+}
+
+@media (max-width: 768px) {
+  .wheel-container {
+    margin: 10px;
+    padding: 10px;
+  }
+  
+  #wheel canvas {
+    width: 300px;
+    height: 300px;
+  }
+} 
