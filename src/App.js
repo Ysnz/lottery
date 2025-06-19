@@ -36,6 +36,7 @@ function App() {
   const [showWheel, setShowWheel] = useState(false);
   const [spinTrigger, setSpinTrigger] = useState(0);
   const [wheelCodes, setWheelCodes] = useState([]);
+  const [winningCode, setWinningCode] = useState(null);
 
   const handleRowChange = (index, newValue) => {
     const newRewards = [...rewards];
@@ -56,8 +57,12 @@ function App() {
     newRewards[index].winner = null;
     setRewards(newRewards);
     
+    const codes = generateCodes();
+    const winner = codes[Math.floor(Math.random() * codes.length)];
+
+    setWheelCodes(codes);
+    setWinningCode(winner);
     setSpinningRowIndex(index);
-    setWheelCodes(generateCodes());
     setShowWheel(true);
     setSpinTrigger(x => x + 1);
   };
@@ -108,6 +113,7 @@ function App() {
               key={spinTrigger}
               segments={wheelCodes}
               segColors={segColors}
+              winningSegment={winningCode}
               onFinished={handleWheelFinish}
               primaryColor="#13a3b3"
               primaryColoraround="#e6f7fa"
