@@ -279,4 +279,89 @@
   padding: 18px 18px 18px 18px;
   display: flex;
   align-items: center;
+  transition: all 0.3s ease;
+}
+
+.winning-row {
+  background: #f4fafd;
+}
+
+.winning-row .tmup-prize-btn {
+  opacity: 0.7;
+  cursor: default;
+}
+
+.winning-row .tmup-prize-btn.selected {
+  background: #13a3b3;
+  color: #fff;
+  border: 1.5px solid #13a3b3;
+  opacity: 1;
+}
+
+.winning-row .tmup-input {
+  color: #13a3b3;
+  font-weight: 700;
+  font-size: 1.1rem;
+  background: #f4fafd;
+  border-color: #13a3b3;
+  text-align: center;
+}
+
+.winning-row .tmup-spin-btn {
+  background: #13a3b3;
+  color: #fff;
+  opacity: 0.8;
+  cursor: default;
+}
+
+.tmup-row-container.has-winner {
+  background: #e6f7fa;
+  border: 2px solid #13a3b3;
+  box-shadow: 0 4px 20px rgba(19,163,179,0.15);
+}
+
+.winner-display-inline {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 8px 0;
+}
+
+.winner-badge-inline {
+  background: #13a3b3;
+  color: white;
+  padding: 8px 18px;
+  border-radius: 20px;
+  font-size: 1rem;
+  font-weight: 700;
+  box-shadow: 0 2px 8px rgba(19, 163, 179, 0.2);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.winner-code-inline {
+  background: #fff;
+  color: #13a3b3;
+  padding: 8px 18px;
+  border-radius: 12px;
+  font-size: 1.1rem;
+  font-weight: 800;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  border: 2px solid #13a3b3;
+  letter-spacing: 0.05em;
+  text-align: center;
+}
+
+.tmup-row.winning-row {
+  justify-content: center;
+}
+
+@media (max-width: 768px) {
+  .winner-display-inline {
+    flex-direction: column;
+    gap: 10px;
+  }
 } 

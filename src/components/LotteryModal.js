@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './LotteryModal.css';
 
 const prizeOptions = [
@@ -9,95 +9,92 @@ const prizeOptions = [
   { label: '€50', value: 50 },
 ];
 
-const RewardRow = ({ value, onChange, onSpin, onRemove, canRemove }) => (
-  <div className="tmup-row">
-    <div className="tmup-prize-options">
-      {prizeOptions.map((option) => (
-        <button
-          key={option.value}
-          className={`tmup-prize-btn${value.selectedPrize === option.value ? ' selected' : ''}`}
-          onClick={() => onChange({ ...value, selectedPrize: option.value })}
-        >
-          {option.label}
-        </button>
-      ))}
-    </div>
-    <input
-      className="tmup-input"
-      type="text"
-      placeholder="Prize name"
-      value={value.prizeName}
-      onChange={e => onChange({ ...value, prizeName: e.target.value })}
-    />
-    <button
-      className="tmup-spin-btn"
-      onClick={onSpin}
-      disabled={!value.prizeName}
-      title="Spin"
-    >
-      SPIN
-    </button>
-    {canRemove && (
+const RewardRow = ({ value, onChange, onSpin, onRemove, canRemove }) => {
+  const isWinningRow = !!value.winner;
+
+  if (isWinningRow) {
+    return (
+      <div className="tmup-row winning-row">
+        <div className="winner-display-inline">
+          <span className="winner-badge-inline">🎉 Winner!</span>
+          <span className="winner-code-inline">{value.winner}</span>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className={`tmup-row`}>
+      <div className="tmup-prize-options">
+        {prizeOptions.map((option) => (
+          <button
+            key={option.value}
+            className={`tmup-prize-btn${value.selectedPrize === option.value ? ' selected' : ''}`}
+            onClick={() => onChange({ selectedPrize: option.value })}
+          >
+            {option.label}
+          </button>
+        ))}
+      </div>
+      <input
+        className="tmup-input"
+        type="text"
+        placeholder="Prize name"
+        value={value.prizeName}
+        onChange={e => onChange({ prizeName: e.target.value })}
+      />
       <button
-        className="tmup-remove-btn"
-        onClick={onRemove}
-        title="Remove"
-        type="button"
+        className="tmup-spin-btn"
+        onClick={onSpin}
+        disabled={!value.prizeName}
+        title="Spin"
       >
-        ×
+        SPIN
       </button>
-    )}
-  </div>
-);
+      {canRemove && (
+        <button
+          className="tmup-remove-btn"
+          onClick={onRemove}
+          title="Remove"
+          type="button"
+        >
+          ×
+        </button>
+      )}
+    </div>
+  );
+};
 
 const LotteryModal = ({
   isOpen,
   onClose,
+  rewards,
+  onRowChange,
+  onAddRow,
+  onRemoveRow,
   onSpin
 }) => {
-  const [rewardRows, setRewardRows] = useState([
-    { selectedPrize: 0, prizeName: '' }
-  ]);
-
   if (!isOpen) return null;
-
-  const handleRowChange = (idx, newValue) => {
-    setRewardRows(rows => rows.map((row, i) => (i === idx ? newValue : row)));
-  };
-
-  const handleAddRow = () => {
-    setRewardRows(rows => [...rows, { selectedPrize: 0, prizeName: '' }]);
-  };
-
-  const handleRemoveRow = idx => {
-    setRewardRows(rows => rows.filter((_, i) => i !== idx));
-  };
-
-  const handleSpin = idx => {
-    const row = rewardRows[idx];
-    if (!row.prizeName) return;
-    onSpin([{ name: row.prizeName, value: row.selectedPrize }]);
-    setRewardRows(rows => rows.map((r, i) => i === idx ? { selectedPrize: 0, prizeName: '' } : r));
-  };
 
   return (
     <div className="lottery-modal-overlay">
       <div className="tmup-card">
         <h2 className="tmup-title">Giving Draw</h2>
-        {rewardRows.map((row, idx) => (
-          <div className="tmup-row-container" key={idx}>
+        {rewards.map((row, idx) => (
+          <div className={`tmup-row-container${row.winner ? ' has-winner' : ''}`} key={idx}>
             <RewardRow
               value={row}
-              onChange={val => handleRowChange(idx, val)}
-              onSpin={() => handleSpin(idx)}
-              onRemove={() => handleRemoveRow(idx)}
-              canRemove={rewardRows.length > 1}
+              onChange={val => onRowChange(idx, val)}
+              onSpin={() => onSpin(idx)}
+              onRemove={() => onRemoveRow(idx)}
+              canRemove={rewards.length > 1 && !row.winner}
             />
           </div>
         ))}
         <button
           className="tmup-add-btn"
-          onClick={handleAddRow}
+          onClick={onAddRow}
+          disabled={rewards.some(row => !row.prizeName)}
         >
           +Add Reward
         </button>
