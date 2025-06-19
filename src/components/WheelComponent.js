@@ -24,7 +24,9 @@ const WheelComponent = ({
     const [isFinished, setFinished] = useState(false);
     const [currentSegment, setCurrentSegment] = useState("");
     const [isStarted, setIsStarted] = useState(false);
-    
+    const [showSpinBtn, setShowSpinBtn] = useState(true);
+    const [winner, setWinner] = useState(null);
+
     let timerHandle = 0;
     let angleCurrent = 0;
     let angleDelta = 0;
@@ -40,12 +42,16 @@ const WheelComponent = ({
 
     useEffect(() => {
         wheelInit();
+        setShowSpinBtn(true);
+        setFinished(false);
+        setWinner(null);
+        setIsStarted(false);
         return () => {
             if (timerHandle) {
                 clearInterval(timerHandle);
             }
         };
-    }, []);
+    }, [segments]);
 
     const wheelInit = () => {
         initCanvas();
@@ -66,8 +72,8 @@ const WheelComponent = ({
 
     const spin = () => {
         if (isFinished && isOnlyOnce) return;
-        
         setIsStarted(true);
+        setShowSpinBtn(false);
         if (timerHandle === 0) {
             spinStart = new Date().getTime();
             maxSpeed = Math.PI / segments.length;
@@ -114,6 +120,7 @@ const WheelComponent = ({
 
         if (finished) {
             setFinished(true);
+            setWinner(currentSegment);
             if (onFinished) onFinished(currentSegment);
             clearInterval(timerHandle);
             timerHandle = 0;
@@ -160,19 +167,16 @@ const WheelComponent = ({
         let lastAngle = angleCurrent;
         const len = segments.length;
         const PI2 = Math.PI * 2;
-        
         ctx.lineWidth = 1;
         ctx.strokeStyle = primaryColor || "black";
         ctx.textBaseline = "middle";
         ctx.textAlign = "center";
         ctx.font = "1em " + fontFamily;
-        
         for (let i = 1; i <= len; i++) {
             const angle = PI2 * (i / len) + angleCurrent;
             drawSegment(i - 1, lastAngle, angle);
             lastAngle = angle;
         }
-
         // Draw center circle
         ctx.beginPath();
         ctx.arc(centerX, centerY, 40, 0, PI2, false);
@@ -186,7 +190,6 @@ const WheelComponent = ({
         ctx.textAlign = "center";
         ctx.fillText(buttonText || "Spin", centerX, centerY + 3);
         ctx.stroke();
-
         // Draw outer circle
         ctx.beginPath();
         ctx.arc(centerX, centerY, size, 0, PI2, false);
@@ -207,19 +210,15 @@ const WheelComponent = ({
         ctx.lineTo(centerX, centerY - 60);
         ctx.closePath();
         ctx.fill();
-        
         const change = angleCurrent + Math.PI / 2;
         let i = segments.length - Math.floor((change / (Math.PI * 2)) * segments.length) - 1;
         if (i < 0) i = i + segments.length;
-        
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
         ctx.fillStyle = "transparent";
         ctx.font = "bold 1.5em " + fontFamily;
-        
         const newCurrentSegment = segments[i];
         setCurrentSegment(newCurrentSegment);
-        
         if (isStarted) {
             ctx.fillText(newCurrentSegment, centerX + 10, centerY + size + 50);
         }
@@ -231,7 +230,7 @@ const WheelComponent = ({
     };
 
     return (
-        <div id="wheel" className="wheel-container">
+        <div id="wheel" className="wheel-container" style={{ position: 'relative' }}>
             <canvas
                 ref={canvasRef}
                 id="canvas"
@@ -241,8 +240,38 @@ const WheelComponent = ({
                     pointerEvents: isFinished && isOnlyOnce ? "none" : "auto",
                     cursor: isFinished && isOnlyOnce ? "not-allowed" : "pointer"
                 }}
-                onClick={spin}
             />
+            {showSpinBtn && (
+                <button
+                    className="wheel-spin-center-btn"
+                    onClick={spin}
+                    style={{
+                        position: 'absolute',
+                        left: '50%',
+                        top: '50%',
+                        transform: 'translate(-50%, -50%)',
+                        width: 120,
+                        height: 120,
+                        borderRadius: '50%',
+                        background: '#13a3b3',
+                        color: '#fff',
+                        fontWeight: 800,
+                        fontSize: '2rem',
+                        border: 'none',
+                        boxShadow: '0 4px 24px rgba(19,163,179,0.13)',
+                        zIndex: 10,
+                        cursor: 'pointer',
+                        letterSpacing: '0.04em',
+                        textTransform: 'uppercase',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        transition: 'background 0.18s, box-shadow 0.18s'
+                    }}
+                >
+                    SPIN
+                </button>
+            )}
         </div>
     );
 };

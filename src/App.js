@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState } from 'react';
 import LotteryModal from './components/LotteryModal';
 import WheelComponent from './components/WheelComponent';
 import './App.css';
@@ -8,49 +8,48 @@ const segColors = [
 ];
 
 function App() {
-  const [showModal, setShowModal] = useState(false);
-  const [rewards, setRewards] = useState([]);
+  const [showModal, setShowModal] = useState(true);
+  const [activeReward, setActiveReward] = useState(null); // {name, value}
   const [showWheel, setShowWheel] = useState(false);
-  const wheelRef = useRef();
-  const [segments, setSegments] = useState([]);
+  const [winner, setWinner] = useState(null);
   const [spinTrigger, setSpinTrigger] = useState(0);
 
-  // Spin butonuna basınca
+  // Sadece ilgili satırdan spin
   const handleSpin = (rewardList) => {
+    if (!rewardList || !rewardList[0]) return;
+    setActiveReward(rewardList[0]);
     setShowModal(false);
-    setRewards(rewardList);
-    setSegments(rewardList.map(r => r.name + (r.value ? ` (${r.value}€)` : ' (Free)')));
     setTimeout(() => {
       setShowWheel(true);
-      setSpinTrigger(x => x + 1); // spin tetikleyici
+      setSpinTrigger(x => x + 1);
     }, 300);
   };
 
-  // Çark bitince tekrar modal açmak için
-  const handleWheelFinish = () => {
-    setTimeout(() => {
-      setShowWheel(false);
-      setShowModal(true);
-    }, 1500);
+  // Wheel bitince kazananı göster
+  const handleWheelFinish = (winnerSegment) => {
+    setShowWheel(false);
+    setWinner(winnerSegment);
+  };
+
+  // Continue ile tekrar draw ekranı
+  const handleContinue = () => {
+    setWinner(null);
+    setActiveReward(null);
+    setShowModal(true);
   };
 
   return (
     <div className="App app-center lottery-bg">
-      {!showWheel && (
-        <button className="lottery-btn" onClick={() => setShowModal(true)}>
-          START LOTTERY
-        </button>
-      )}
       <LotteryModal
         isOpen={showModal}
         onClose={() => setShowModal(false)}
         onSpin={handleSpin}
       />
-      {showWheel && (
+      {showWheel && activeReward && (
         <WheelComponent
           key={spinTrigger}
-          segments={segments}
-          segColors={segments.map((_, i) => segColors[i % segColors.length])}
+          segments={[activeReward.name + (activeReward.value ? ` (${activeReward.value}€)` : ' (Free)')]}
+          segColors={[segColors[0]]}
           onFinished={handleWheelFinish}
           primaryColor="#13a3b3"
           primaryColoraround="#e6f7fa"
@@ -61,6 +60,16 @@ function App() {
           upDuration={50}
           downDuration={2000}
         />
+      )}
+      {winner && (
+        <div className="result-section">
+          <div className="result-card">
+            <h2>Congratulations!</h2>
+            <div className="prize-amount">{winner}</div>
+            <div style={{ color: '#13a3b3', fontWeight: 600, margin: '18px 0 0 0' }}>Your reward is on the way!</div>
+            <button className="reset-button" onClick={handleContinue} style={{marginTop: 24}}>Continue</button>
+          </div>
+        </div>
       )}
     </div>
   );
