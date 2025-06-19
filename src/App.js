@@ -8,7 +8,7 @@ const segColors = [
 ];
 
 function App() {
-  const [showModal, setShowModal] = useState(true);
+  const [showModal, setShowModal] = useState(false);
   const [activeReward, setActiveReward] = useState(null); // {name, value}
   const [showWheel, setShowWheel] = useState(false);
   const [winner, setWinner] = useState(null);
@@ -35,11 +35,24 @@ function App() {
   const handleContinue = () => {
     setWinner(null);
     setActiveReward(null);
+    setShowModal(false);
+  };
+
+  // START LOTTERY butonuna tıklandığında modal'ı aç
+  const handleStartLottery = () => {
     setShowModal(true);
   };
 
   return (
     <div className="App app-center lottery-bg">
+      {!showModal && !showWheel && !winner && (
+        <div className="App-main">
+          <button className="start-lottery-btn" onClick={handleStartLottery}>
+            START LOTTERY
+          </button>
+        </div>
+      )}
+      
       <LotteryModal
         isOpen={showModal}
         onClose={() => setShowModal(false)}
