@@ -37,6 +37,7 @@ function App() {
   const [spinTrigger, setSpinTrigger] = useState(0);
   const [wheelCodes, setWheelCodes] = useState([]);
   const [winningCode, setWinningCode] = useState(null);
+  const [spinDuration, setSpinDuration] = useState(8000);
 
   const handleRowChange = (index, newValue) => {
     const newRewards = [...rewards];
@@ -63,17 +64,20 @@ function App() {
     setWheelCodes(codes);
     setWinningCode(winner);
     setSpinningRowIndex(index);
+    setSpinDuration(Math.random() * 7000 + 8000);
     setShowWheel(true);
     setSpinTrigger(x => x + 1);
   };
 
   const handleWheelFinish = (winnerCode) => {
-    const activeReward = rewards[spinningRowIndex];
-    const prizeText = `${winnerCode} - ${activeReward.prizeName}${activeReward.selectedPrize ? ` (${activeReward.selectedPrize}€)` : ' (Free)'}`;
-    
-    const newRewards = [...rewards];
-    newRewards[spinningRowIndex].winner = prizeText;
-    setRewards(newRewards);
+    setTimeout(() => {
+      const activeReward = rewards[spinningRowIndex];
+      const prizeText = `${winnerCode} - ${activeReward.prizeName}${activeReward.selectedPrize ? ` (${activeReward.selectedPrize}€)` : ' (Free)'}`;
+      
+      const newRewards = [...rewards];
+      newRewards[spinningRowIndex].winner = prizeText;
+      setRewards(newRewards);
+    }, 1000);
   };
 
   const handleContinue = () => {
@@ -116,13 +120,12 @@ function App() {
               winningSegment={winningCode}
               onFinished={handleWheelFinish}
               primaryColor="#13a3b3"
-              primaryColoraround="#e6f7fa"
               contrastColor="#fff"
-              buttonText="SPIN"
+              buttonText=""
               isOnlyOnce={true}
               size={290}
-              upDuration={50}
-              downDuration={2000}
+              upDuration={1000}
+              downDuration={spinDuration - 1000}
             />
             {rewards[spinningRowIndex]?.winner && (
               <div className="wheel-winner-overlay">

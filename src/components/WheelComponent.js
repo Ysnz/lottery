@@ -55,23 +55,23 @@ const WheelComponent = ({
         const randomOffset = (Math.random() - 0.5) * segmentAngle * 0.8;
         const targetAngle = (winningSegmentIndex + 0.5) * segmentAngle + randomOffset;
         
-        const totalRotations = 5 * (2 * Math.PI);
-        const finalAngle = totalRotations + (2 * Math.PI - targetAngle);
+        const totalRotations = Math.floor(downDuration / 1000) * (2 * Math.PI);
+        const finalAngle = totalRotations + (2 * Math.PI - targetAngle) + (3 * Math.PI / 2);
 
         let startTime = null;
 
         const animate = (timestamp) => {
             if (!startTime) startTime = timestamp;
             const progress = timestamp - startTime;
+            const totalDuration = upDuration + downDuration;
             
-            const spinUp = easeOutQuad(Math.min(progress, upDuration), 0, finalAngle, upDuration + downDuration);
-            const spinDown = easeInOutCubic(Math.min(progress, upDuration + downDuration), 0, finalAngle, upDuration + downDuration);
+            const newAngle = easeInOutCubic(Math.min(progress, totalDuration), 0, finalAngle, totalDuration);
             
-            angleCurrent.current = spinDown;
+            angleCurrent.current = newAngle;
 
             draw();
 
-            if (progress < (upDuration + downDuration)) {
+            if (progress < totalDuration) {
                 spinHandle.current = requestAnimationFrame(animate);
             } else {
                 setFinished(true);
@@ -87,11 +87,6 @@ const WheelComponent = ({
         if (t < 1) return c/2*t*t*t + b;
         t -= 2;
         return c/2*(t*t*t + 2) + b;
-    };
-
-    const easeOutQuad = (t, b, c, d) => {
-        t /= d;
-        return -c * t*(t-2) + b;
     };
 
     const wheelDraw = () => {
@@ -151,10 +146,6 @@ const WheelComponent = ({
         ctx.lineWidth = 5;
         ctx.strokeStyle = contrastColor || "white";
         ctx.fill();
-        ctx.font = "bold 2em " + fontFamily;
-        ctx.fillStyle = contrastColor || "white";
-        ctx.textAlign = "center";
-        ctx.fillText(buttonText || "Spin", 300, 303);
         ctx.stroke();
 
         ctx.beginPath();
@@ -171,11 +162,12 @@ const WheelComponent = ({
         ctx.strokeStyle = contrastColor || "white";
         ctx.fillStyle = contrastColor || "white";
         ctx.beginPath();
-        ctx.moveTo(300 - 10, 300 - (size + 5));
-        ctx.lineTo(300 + 10, 300 - (size + 5));
-        ctx.lineTo(300, 300 - (size - 15));
+        ctx.moveTo(300 - 15, 300 - size - 5);
+        ctx.lineTo(300 + 15, 300 - size - 5);
+        ctx.lineTo(300, 300 - size + 25);
         ctx.closePath();
         ctx.fill();
+        ctx.stroke();
     };
 
     const clear = () => {
