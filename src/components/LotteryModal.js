@@ -85,14 +85,15 @@ const LotteryModal = ({
       <div className="tmup-card">
         <h2 className="tmup-title">Giving Draw</h2>
         {rewardRows.map((row, idx) => (
-          <RewardRow
-            key={idx}
-            value={row}
-            onChange={val => handleRowChange(idx, val)}
-            onSpin={() => handleSpin(idx)}
-            onRemove={() => handleRemoveRow(idx)}
-            canRemove={rewardRows.length > 1}
-          />
+          <div className="tmup-row-container" key={idx}>
+            <RewardRow
+              value={row}
+              onChange={val => handleRowChange(idx, val)}
+              onSpin={() => handleSpin(idx)}
+              onRemove={() => handleRemoveRow(idx)}
+              canRemove={rewardRows.length > 1}
+            />
+          </div>
         ))}
         <button
           className="tmup-add-btn"
