@@ -34,17 +34,19 @@ const RewardRow = ({ value, onChange, onSpin, onRemove, prizeOptions = defaultPr
 
   return (
     <div className={`tmup-row`}>
-      <div className="tmup-prize-options">
-        {prizeOptions.map((option) => (
-          <button
-            key={option.value}
-            className={`tmup-prize-btn${value.selectedPrize === option.value ? ' selected' : ''}`}
-            onClick={() => onChange({ selectedPrize: option.value })}
-          >
-            <div className="prize-amount">{option.label}</div>
-            <div className="prize-description">{option.description}</div>
-          </button>
-        ))}
+      <div style={{width: 340, margin: '0 0 0 8px', display: 'flex', alignItems: 'center'}}>
+        <div className="tmup-prize-options">
+          {prizeOptions.map((option) => (
+            <button
+              key={option.value}
+              className={`tmup-prize-btn${value.selectedPrize === option.value ? ' selected' : ''}`}
+              onClick={() => onChange({ selectedPrize: option.value })}
+            >
+              <div className="prize-amount">{option.label}</div>
+              <div className="prize-description">{option.description && option.description.length > 10 ? option.description.slice(0, 10) + '...' : option.description}</div>
+            </button>
+          ))}
+        </div>
       </div>
       <input
         className="tmup-input"
@@ -52,6 +54,7 @@ const RewardRow = ({ value, onChange, onSpin, onRemove, prizeOptions = defaultPr
         placeholder="Prize name"
         value={value.prizeName}
         onChange={e => onChange({ prizeName: e.target.value })}
+        style={{minWidth: 120, maxWidth: 180}}
       />
       <button
         className="tmup-spin-btn"

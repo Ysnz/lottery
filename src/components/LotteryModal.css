@@ -200,11 +200,16 @@
   scrollbar-color: #13a3b3 #e6f7fa;
 }
 .tmup-prize-options::-webkit-scrollbar {
-  height: 8px;
+  height: 6px;
 }
 .tmup-prize-options::-webkit-scrollbar-thumb {
   background: #13a3b3;
   border-radius: 4px;
+  width: 40px;
+  min-width: 40px;
+  max-width: 40px;
+  margin-left: 30px;
+  margin-right: 30px;
 }
 .tmup-prize-options::-webkit-scrollbar-track {
   background: #e6f7fa;
@@ -215,10 +220,10 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-width: 110px;
-  min-height: 64px;
+  min-width: 85px;
+  min-height: 44px;
   text-align: center;
-  padding: 12px 18px;
+  padding: 7px 10px;
   background: #fff;
   border: 2px solid #13a3b3;
   color: #13a3b3;
@@ -230,19 +235,13 @@
   cursor: pointer;
 }
 .tmup-prize-btn .prize-amount {
-  font-size: 1.22rem;
-  font-weight: 700;
-  margin-bottom: 4px;
+  font-size: 1rem;
+  margin-bottom: 2px;
 }
 .tmup-prize-btn .prize-description {
-  font-size: 0.92rem;
-  font-weight: 400;
-  opacity: 0.8;
-  line-height: 1.2;
-  max-width: 120px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  font-size: 0.78rem;
+  max-width: 60px;
+  line-height: 1.1;
 }
 .tmup-prize-btn.selected,
 .tmup-prize-btn:hover {
