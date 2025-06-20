@@ -1,4 +1,4 @@
-# 🎰 Interactive Giving Draw & Spin Lottery
+# 🎰 Interactive Giving Draw & TMU Lottery
 
 **[► View Live Demo](https://ysnz.github.io/lottery)**
 
