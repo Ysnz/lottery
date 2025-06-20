@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import confetti from 'canvas-confetti';
 import LotteryModal from './components/LotteryModal';
 import WheelComponent from './components/WheelComponent';
-import InfoPopup from './components/InfoPopup';
 import './App.css';
 
 const segColors = [
@@ -40,7 +39,6 @@ function App() {
   const [wheelCodes, setWheelCodes] = useState([]);
   const [winningCode, setWinningCode] = useState(null);
   const [spinDuration, setSpinDuration] = useState(8000);
-  const [popupMessage, setPopupMessage] = useState('');
 
   const triggerConfetti = () => {
     const launch = (origin, angle) => {
@@ -107,12 +105,6 @@ function App() {
 
   const handleComplete = () => {
     setShowModal(false);
-    setPopupMessage('Your operation has been successfully saved.');
-  };
-
-  const handlePopupClose = () => {
-    setPopupMessage('');
-    // Optionally reset other states here if needed when closing the final popup
   };
 
   const handleWheelFinish = (winnerCode) => {
@@ -157,8 +149,6 @@ function App() {
         onSpin={handleSpin}
         onComplete={handleComplete}
       />
-
-      <InfoPopup message={popupMessage} onClose={handlePopupClose} />
 
       {showWheel && spinningRowIndex !== null && (
         <div className={`wheel-overlay ${rewards[spinningRowIndex]?.winner ? 'has-winner' : ''}`}>

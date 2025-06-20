@@ -105,7 +105,7 @@ const LotteryModal = ({
             onClick={onAddRow}
             disabled={rewards.some(row => !row.prizeName)}
           >
-            +Add Reward
+            Add Reward
           </button>
           {hasWinner && (
             <button

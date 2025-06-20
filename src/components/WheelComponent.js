@@ -88,26 +88,6 @@ const WheelComponent = ({
         return b + c * (6 * tc * ts + -15 * ts * ts + 10 * tc);
     };
 
-    const improvedEasing = (t, b, c, d) => {
-        const normalizedTime = t / d;
-        
-        if (normalizedTime < 0.4) {
-            const segmentTime = normalizedTime / 0.4;
-            return b + c * (segmentTime * 0.5);
-        } else {
-            const segmentTime = (normalizedTime - 0.4) / 0.6;
-            const easeOut = 1 - Math.pow(1 - segmentTime, 4);
-            return b + c * (0.5 + easeOut * 0.5);
-        }
-    };
-
-    const easeInOutCubic = (t, b, c, d) => {
-        t /= d/2;
-        if (t < 1) return c/2*t*t*t + b;
-        t -= 2;
-        return c/2*(t*t*t + 2) + b;
-    };
-
     const wheelDraw = () => {
         clear();
         drawWheel();

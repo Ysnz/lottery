@@ -58,7 +58,7 @@ This project is a sophisticated, interactive lottery and prize wheel application
     -   After the wheel stops, the winner information card is displayed.
     -   Click **"Continue"** to return to the draw management modal. The winning row will now be updated with the prize code.
 5.  **Manage Draws**:
-    -   Click **"+Add Reward"** to add another prize row.
+    -   Click **"Add Reward"** to add another prize row.
     -   Click the **"×"** button on any row to remove it.
 6.  **Complete the Session**:
     -   Once you are finished, click the **"Complete"** button.
@@ -99,3 +99,20 @@ You can fine-tune the wheel's spinning animation by adjusting props passed to th
 
 -   **Spin Duration**: In `src/App.js`, the `handleSpin` function sets the duration. The default is a random duration between 14 and 22 seconds.
     ```
+
+## 📁 Project Structure
+
+```
+spin-lottery/
+├── public/
+│   └── index.html
+└── src/
+    ├── components/
+    │   ├── LotteryModal.js      # Main modal for managing draws
+    │   ├── LotteryModal.css     # Styles for the modal
+    │   ├── WheelComponent.js    # The spinning wheel logic and canvas rendering
+    │   └── WheelComponent.css   # Styles for the wheel
+    ├── App.js                   # Main application component, manages state
+    ├── App.css                  # Global application styles
+    └── index.js                 # Application entry point
+```
