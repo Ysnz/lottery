@@ -1,15 +1,16 @@
 import React from 'react';
 import './LotteryModal.css';
 
-const prizeOptions = [
-  { label: 'Free entry', value: 0 },
-  { label: '€5', value: 5 },
-  { label: '€10', value: 10 },
-  { label: '€20', value: 20 },
-  { label: '€50', value: 50 },
+// Default prize options fallback
+const defaultPrizeOptions = [
+  { label: 'Free Entry', value: 0, description: '' },
+  { label: '€5', value: 5, description: 'Basic reward' },
+  { label: '€10', value: 10, description: 'Standard reward' },
+  { label: '€20', value: 20, description: 'Premium reward' },
+  { label: '€50', value: 50, description: 'VIP reward' },
 ];
 
-const RewardRow = ({ value, onChange, onSpin, onRemove }) => {
+const RewardRow = ({ value, onChange, onSpin, onRemove, prizeOptions = defaultPrizeOptions }) => {
   const isWinningRow = !!value.winner;
 
   if (isWinningRow) {
@@ -40,7 +41,8 @@ const RewardRow = ({ value, onChange, onSpin, onRemove }) => {
             className={`tmup-prize-btn${value.selectedPrize === option.value ? ' selected' : ''}`}
             onClick={() => onChange({ selectedPrize: option.value })}
           >
-            {option.label}
+            <div className="prize-amount">{option.label}</div>
+            <div className="prize-description">{option.description}</div>
           </button>
         ))}
       </div>
@@ -79,7 +81,9 @@ const LotteryModal = ({
   onAddRow,
   onRemoveRow,
   onSpin,
-  onComplete
+  onComplete,
+  prizeOptions = defaultPrizeOptions,
+  campaignName = ''
 }) => {
   if (!isOpen) return null;
 
@@ -89,6 +93,9 @@ const LotteryModal = ({
     <div className="lottery-modal-overlay">
       <div className="tmup-card">
         <h2 className="tmup-title">Giving Draw</h2>
+        {campaignName && (
+          <div className="tmup-campaign-name">{campaignName}</div>
+        )}
         {rewards.map((row, idx) => (
           <div className={`tmup-row-container${row.winner ? ' has-winner' : ''}`} key={idx}>
             <RewardRow
@@ -96,6 +103,7 @@ const LotteryModal = ({
               onChange={val => onRowChange(idx, val)}
               onSpin={() => onSpin(idx)}
               onRemove={() => onRemoveRow(idx)}
+              prizeOptions={prizeOptions}
             />
           </div>
         ))}
