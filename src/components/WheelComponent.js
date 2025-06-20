@@ -65,7 +65,7 @@ const WheelComponent = ({
             const progress = timestamp - startTime;
             const totalDuration = upDuration + downDuration;
             
-            const newAngle = improvedEasing(Math.min(progress, totalDuration), 0, finalAngle, totalDuration);
+            const newAngle = threePhaseEasing(Math.min(progress, totalDuration), 0, finalAngle, totalDuration);
             
             angleCurrent.current = newAngle;
 
@@ -80,6 +80,12 @@ const WheelComponent = ({
         };
 
         spinHandle.current = requestAnimationFrame(animate);
+    };
+
+    const threePhaseEasing = (t, b, c, d) => {
+        const ts = (t /= d) * t;
+        const tc = ts * t;
+        return b + c * (6 * tc * ts + -15 * ts * ts + 10 * tc);
     };
 
     const improvedEasing = (t, b, c, d) => {
