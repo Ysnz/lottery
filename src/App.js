@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import confetti from 'canvas-confetti';
 import LotteryModal from './components/LotteryModal';
 import WheelComponent from './components/WheelComponent';
 import InfoPopup from './components/InfoPopup';
@@ -40,6 +41,39 @@ function App() {
   const [winningCode, setWinningCode] = useState(null);
   const [spinDuration, setSpinDuration] = useState(8000);
   const [popupMessage, setPopupMessage] = useState('');
+
+  const triggerConfetti = () => {
+    const launch = (origin, angle) => {
+      // First, more powerful burst
+      confetti({
+        particleCount: 250,
+        angle: angle,
+        spread: 90,
+        origin: origin,
+        colors: segColors,
+        startVelocity: 45,
+        drift: origin.x === 0 ? -1 : 1,
+      });
+
+      // Second, wider burst a moment later
+      setTimeout(() => {
+        confetti({
+          particleCount: 150,
+          angle: angle,
+          spread: 120,
+          origin: origin,
+          colors: segColors,
+          startVelocity: 35,
+          scalar: 0.8,
+          drift: origin.x === 0 ? -0.5 : 0.5,
+        });
+      }, 100);
+    };
+
+    // Launch from both sides
+    launch({ x: 0, y: 0.6 }, 60);
+    launch({ x: 1, y: 0.6 }, 120);
+  };
 
   const handleRowChange = (index, newValue) => {
     const newRewards = [...rewards];
@@ -89,6 +123,7 @@ function App() {
       const newRewards = [...rewards];
       newRewards[spinningRowIndex].winner = prizeText;
       setRewards(newRewards);
+      triggerConfetti();
     }, 1000);
   };
 
