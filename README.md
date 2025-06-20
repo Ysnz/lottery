@@ -1,5 +1,7 @@
 # 🎰 Interactive Giving Draw & Spin Lottery
 
+**[► View Live Demo](https://ysnz.github.io/lottery)**
+
 This project is a sophisticated, interactive lottery and prize wheel application built with **React** and the **HTML5 Canvas API**. It goes beyond a simple prize wheel by offering a comprehensive "Giving Draw" management system within a sleek, modern modal interface. Users can add multiple prizes, spin for each one individually, and track winners in a dynamic and engaging way.
 
 ## ✨ Core Features
@@ -96,95 +98,4 @@ const segColors = [
 You can fine-tune the wheel's spinning animation by adjusting props passed to the `WheelComponent` in `src/App.js` and modifying the `handleSpin` function.
 
 -   **Spin Duration**: In `src/App.js`, the `handleSpin` function sets the duration. The default is a random duration between 14 and 22 seconds.
-    ```javascript
-    // src/App.js -> handleSpin()
-    setSpinDuration(Math.random() * 8000 + 14000); // (8000ms base + 14000ms random)
     ```
-
--   **Animation Phases (`upDuration` / `downDuration`)**: The total duration is split into acceleration and deceleration phases.
-    ```javascript
-    // src/App.js -> <WheelComponent ... />
-    <WheelComponent
-      upDuration={1500}
-      downDuration={spinDuration - 1500}
-      // ... other props
-    />
-    ```
--   **Easing Function**: The physics of the slowdown are controlled by the `improvedEasing` function in `src/components/WheelComponent.js`. You can modify the logic here to create different animation curves.
-
-## 📁 Project Structure
-
-```
-spin-lottery/
-├── public/
-│   └── index.html
-└── src/
-    ├── components/
-    │   ├── LotteryModal.js      # Main modal for managing draws
-    │   ├── LotteryModal.css     # Styles for the modal
-    │   ├── WheelComponent.js    # The spinning wheel logic and canvas rendering
-    │   ├── WheelComponent.css   # Styles for the wheel
-    │   └── InfoPopup.js         # A simple notification popup
-    ├── App.js                   # Main application component, manages state
-    ├── App.css                  # Global application styles
-    └── index.js                 # Application entry point
-```
-
-## 🌟 Key Concepts Explained
-
-### State Management (React Hooks)
-
-The application relies heavily on React Hooks (`useState`) in `App.js` to manage the global state, including:
--   `rewards`: An array of objects, where each object represents a prize draw row.
--   `showModal`, `showWheel`: Booleans to control the visibility of the modal and the wheel.
--   `spinTrigger`: A number that is incremented to force a re-render of the `WheelComponent`, allowing for repeated spins.
-
-### Dynamic Component Rendering
-
-The UI dynamically renders based on the state. For example, the `RewardRow` in `LotteryModal.js` renders differently if it has a `winner` property, and the `LotteryModal` itself only appears if `isOpen` is true.
-
-### HTML5 Canvas for the Wheel
-
-`WheelComponent.js` uses the Canvas API to draw the prize wheel. This is done for performance and to achieve smooth, 60fps animations that are not easily possible with standard CSS. The `requestAnimationFrame` loop in the `spin` function continuously redraws the canvas to create the spinning effect.
-
-## 🎨 Styling
-
-The application uses modern CSS features including:
-- CSS Grid and Flexbox for layout
-- CSS animations and transitions
-- Glassmorphism effects with backdrop-filter
-- Gradient backgrounds
-- Responsive design with media queries
-
-## 🔧 Available Scripts
-
-- `npm start` - Runs the app in development mode
-- `npm build` - Builds the app for production
-- `npm test` - Launches the test runner
-- `npm eject` - Ejects from Create React App (one-way operation)
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-## 📄 License
-
-This project is open source and available under the [MIT License](LICENSE).
-
-## 🙏 Acknowledgments
-
-- Inspired by the [Custom wheel of prize with canvas](https://dev.to/sababg/custom-wheel-of-prize-with-canvas-589h) article
-- Built with React and modern web technologies
-- Uses HTML5 Canvas for smooth animations
-
-## 📞 Support
-
-If you have any questions or need help, please open an issue on GitHub.
-
----
-
-Made with ❤️ and React 
